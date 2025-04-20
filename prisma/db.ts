@@ -10,15 +10,15 @@ if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = db;
 }
 
-async function connectToDatabase() {
-  try {
-    await db.$connect();
-    console.log("Prisma connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB with Prisma:", error);
-  } finally {
-    await db.$disconnect();
-  }
-}
+// async function connectToDatabase() {
+//   try {
+//     await db.$connect();
+//     console.log("Prisma connected to MongoDB");
+//   } catch (error) {
+//     console.error("Error connecting to MongoDB with Prisma:", error);
+//   } finally {
+//     await db.$disconnect();
+//   }
+// }
 
-connectToDatabase();
+// connectToDatabase();
