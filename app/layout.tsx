@@ -1,6 +1,13 @@
+import "@ant-design/v5-patch-for-react-19";
+
 import type { Metadata } from "next";
+
 import { Roboto } from "next/font/google";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+
 import "./globals.css";
+import AppThemeConfig from "@/components/providers/theme-config";
+import { ThemeProvider } from "next-themes";
 
 const roboto = Roboto({
   subsets: ["latin", "latin-ext"],
@@ -18,8 +25,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={roboto.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={roboto.className}>
+        <AntdRegistry>
+          <ThemeProvider storageKey="app-theme" enableSystem>
+            <AppThemeConfig>{children}</AppThemeConfig>
+          </ThemeProvider>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }
