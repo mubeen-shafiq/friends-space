@@ -1,16 +1,11 @@
-"use client";
-import { Button } from "antd";
-import { useTheme } from "next-themes";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Chats | Friends Space",
+  description: "Chats page of friends space",
+};
 function ChatPage() {
-  const { setTheme } = useTheme();
-  return (
-    <div>
-      <Button type="primary" onClick={() => setTheme("light")}>
-        Toggle Theme
-      </Button>
-    </div>
-  );
+  return <div>Main Chat Page</div>;
 }
 
 export default ChatPage;
