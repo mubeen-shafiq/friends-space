@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output = "./generated"
+  output   = "./generated"
 }
 
 datasource db {
@@ -9,73 +9,89 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName   String
-  lastName    String
-  avatar      String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  login       UserLogin @relation(fields: [id], references: [userId])
-  chatsSent   Chat[]    @relation("SenderChats")
-  chatsReceived Chat[]  @relation("ReceiverChats")
-  messages    Message[]
-  files       File[]
-  tokens      Token[]
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  firstName     String
+  lastName      String
+  avatar        String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  login         UserLogin? @relation("UserToUserLogin")
+  chatsSent     Chat[]     @relation("SenderChats")
+  chatsReceived Chat[]     @relation("ReceiverChats")
+  messages      Message[]
+  files         File[]
+  tokens        Token[]
 }
 
 model UserLogin {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  email      String   @unique
-  password   String
-  userId     String   @unique
-  googleId   String?
-  appleId    String?
-  user       User     @relation(fields: [userId], references: [id])
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  password String
+  userId   String  @unique @db.ObjectId
+  googleId String?
+  appleId  String?
+  user     User?   @relation("UserToUserLogin", fields: [userId], references: [id])
 }
 
 model Chat {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  senderId      String
-  receiverId    String
-  lastMessageId String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sender        User      @relation("SenderChats", fields: [senderId], references: [id])
-  receiver      User      @relation("ReceiverChats", fields: [receiverId], references: [id])
-  messages      Message[]
-  lastMessage   Message?  @relation(fields: [lastMessageId], references: [id])
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  senderId      String   @db.ObjectId
+  receiverId    String   @db.ObjectId
+  lastMessageId String?  @unique @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sender   User      @relation("SenderChats", fields: [senderId], references: [id])
+  receiver User      @relation("ReceiverChats", fields: [receiverId], references: [id])
+  messages Message[] @relation("ChatMessages")
+
+  lastMessage Message? @relation("ChatLastMessage", fields: [lastMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Message {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  content           String
-  senderId          String
-  chatId            String
-  parentMessageId   String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  chat              Chat      @relation(fields: [chatId], references: [id])
-  sender            User      @relation(fields: [senderId], references: [id])
-  parentMessage     Message?  @relation("ParentMessage", fields: [parentMessageId], references: [id])
-  replies           Message[] @relation("ParentMessage")
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  senderId        String   @db.ObjectId
+  chatId          String   @db.ObjectId
+  parentMessageId String?  @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  chat   Chat @relation("ChatMessages", fields: [chatId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
+
+  parentMessage Message?  @relation("ParentMessage", fields: [parentMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies       Message[] @relation("ParentMessage")
+
+  chatLastMessage Chat? @relation("ChatLastMessage")
+}
+
+enum FileEnum {
+  image @map("image")
+  video @map("video")
 }
 
 model File {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String
-  originalName  String
-  editedName    String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  user          User      @relation(fields: [userId], references: [id])
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  originalName String
+  editedName   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+  type         FileEnum
+}
+
+enum TokenUsage {
+  VERIFY_EMAIL  @map("verify_email")
+  AUTHORIZATION @map("authorization")
 }
 
 model Token {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  token         String
-  usage         String
-  userId        String
-  createdAt     DateTime  @default(now())
-  user          User      @relation(fields: [userId], references: [id])
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String
+  usage     String
+  userId    String   @db.ObjectId
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
-
