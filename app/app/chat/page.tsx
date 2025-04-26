@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Chats page of friends space",
 };
 function ChatPage() {
-  return <div>Main Chat Page</div>;
+  return "No Chats Here!";
 }
 
 export default ChatPage;

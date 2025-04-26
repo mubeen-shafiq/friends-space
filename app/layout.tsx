@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={roboto.className}>
         <AntdRegistry>
-          <ThemeProvider storageKey="app-theme" enableSystem>
+          <ThemeProvider storageKey="app-theme" forcedTheme="light">
             <AppThemeConfig>{children}</AppThemeConfig>
           </ThemeProvider>
         </AntdRegistry>
