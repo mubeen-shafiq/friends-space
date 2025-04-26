@@ -1,65 +1,14 @@
-"use client";
 import { Layout } from "antd";
-import React from "react";
 
-const { Sider, Header, Content } = Layout;
+import { ChatsMainContent } from "@/app/components/app/chats/main-content";
+import { ChatsSidebar } from "@/app/components/app/chats/sidebar";
+import { ChildrenPropsType } from "@/definitions/common";
 
-function ChatsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+function ChatsLayout({ children }: ChildrenPropsType) {
   return (
-    <Layout hasSider style={{ overflow: "auto", height: "100%" }}>
-      <Sider
-        style={{
-          position: "sticky",
-          height: "100%",
-          top: 0,
-          left: 0,
-        }}
-        theme="light"
-      >
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar Chats Sidebar
-        Chats Sidebar Chats Sidebar
-      </Sider>
-      <Layout
-        style={{
-          height: "100%",
-        }}
-      >
-        <Header
-          style={{
-            position: "sticky",
-            top: 0,
-            width: "100%",
-            color: "#fff",
-            background: "#555",
-          }}
-        >
-          Chats Header
-        </Header>
-        <Content
-          style={{
-            minHeight: "1600px",
-          }}
-        >
-          {children}
-        </Content>
-      </Layout>
+    <Layout hasSider style={{ overflow: "hidden", height: "100%" }}>
+      <ChatsSidebar />
+      <ChatsMainContent>{children}</ChatsMainContent>
     </Layout>
   );
 }

@@ -8,6 +8,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import AppThemeConfig from "@/components/providers/theme-config";
 import { ThemeProvider } from "next-themes";
+import { ChildrenPropsType } from "@/definitions/common";
 
 const roboto = Roboto({
   subsets: ["latin", "latin-ext"],
@@ -19,11 +20,7 @@ export const metadata: Metadata = {
   description: "Friends space chat application",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: ChildrenPropsType) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={roboto.className}>
