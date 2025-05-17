@@ -44,7 +44,9 @@ export const SearchBox = ({
   const Comp = label ? Space.Compact : Fragment;
 
   return (
-    <Comp {...(label ? { direction: "vertical" } : {})}>
+    <Comp
+      {...(label ? { direction: "vertical", style: { width: "100%" } } : {})}
+    >
       {label && (
         <label style={labelStyles} htmlFor={id}>
           {label}

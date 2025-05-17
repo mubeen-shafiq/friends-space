@@ -1,13 +1,8 @@
-"use client";
-import { notFound } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
-function ChatWithUserPage() {
-  useEffect(() => {
-    // notFound();
-    throw new Error("Error Incoming!")
-  });
-  return <div>ChatWithUserPage</div>;
+async function ChatWithUserPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  return <div>Chatting with {params.id}</div>;
 }
 
 export default ChatWithUserPage;
