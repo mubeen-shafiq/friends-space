@@ -4,8 +4,13 @@ export const metadata: Metadata = {
   title: "Chats | Friends Space",
   description: "Chats page of friends space",
 };
-function ChatPage() {
-  return <div>Main Chat Page</div>;
+
+async function ChatPage() {
+  return (
+    <div style={{ fontSize: "24px" }}>
+      <button type="button">Toggle</button>
+    </div>
+  );
 }
 
 export default ChatPage;
